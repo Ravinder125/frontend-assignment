@@ -2,17 +2,34 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .container {
-  width: 1400px;
-  background-color: #1e1e1e;
+  max-width: 1400px;
+  background-color: #f7f7f7;
   margin-inline: auto;
   padding: 2rem;
+  color: black;
 }
 
+.dark .container {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+
 @layer base {
+
   .heading {
     font-size: 1.7rem;
-    font-weight: 100;
-    color: rgb(196, 194, 194);
+    color: black;
+    font-weight: 600;
     margin-bottom: 1rem;
   }
+
+  .dark .heading {
+    color: rgb(196, 194, 194);
+  }
+
+}
+
+button {
+  cursor: pointer;
 }

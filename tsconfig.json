@@ -12,6 +12,25 @@
     "types": [
       "jest",
       "@testing-library/jest-dom"
-    ]
-  }
+    ],
+    "target": "ESNext",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "jsx": "react-jsx", // ✅ required
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noEmit": true
+  },
+  "include": [
+    "src"
+  ]
 }
