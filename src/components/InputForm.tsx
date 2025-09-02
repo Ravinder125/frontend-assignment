@@ -19,8 +19,8 @@ const InputForm = ({
     error = ""
 }: InputFormProps) => {
     return (
-        <section>
-            <div className="container my-30 rounded-xl shadow-lg">
+        <section className="container ">
+            <div className="">
                 <h2 className="heading">Input Field</h2>
                 <div>
                     <div className="mb-3 flex flex-col gap-1">

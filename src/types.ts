@@ -11,3 +11,27 @@ export interface InputFieldProps {
     size?: "sm" | "md" | "lg";
     type?: React.HTMLInputTypeAttribute
 }
+
+export interface UserType {
+    id: number;
+    name: string;
+    email: string;
+    age: number;
+    city: string;
+}
+
+export interface Column<T> {
+    key: string;
+    title: string;
+    dataIndex: keyof T;
+    sortable?: boolean;
+}
+
+export interface DataTableProps<T> {
+    data: T[];
+    columns: Column<T>[];
+    loading?: boolean;
+    selectable?: boolean;
+    multiple?: boolean; // support single/multiple row selection
+    onRowSelect?: (selectedRows: T[]) => void;
+}

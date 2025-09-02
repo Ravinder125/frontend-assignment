@@ -1,7 +1,9 @@
 import { type ChangeEvent, type HTMLInputTypeAttribute, useEffect, useState } from "react"
-import InputField from "./components/InputField/InputField"
 import InputForm from "./components/InputForm";
 import { ThemeProvider } from "./context/themeContext";
+import DataTable from "./components/DataTable/DataTable";
+import { generateFakeTableData } from "./utils/data";
+import type { Column, UserType } from "./types";
 
 const inputTypes: React.HTMLInputTypeAttribute[] = [
   "text",
@@ -17,10 +19,48 @@ const inputTypes: React.HTMLInputTypeAttribute[] = [
 ];
 
 
+
+
+const columns: Column<UserType>[] = [
+  {
+    key: "id",
+    title: "Id",
+    dataIndex: "id",
+    sortable: true,
+  },
+  {
+    key: "name",
+    title: "Name",
+    dataIndex: "name",
+    sortable: true,
+  },
+  {
+    key: "email",
+    title: "Email",
+    dataIndex: "email",
+    sortable: true,
+  },
+  {
+    key: "age",
+    title: "Age",
+    dataIndex: "age",
+    sortable: true,
+  },
+  {
+    key: "city",
+    title: "City",
+    dataIndex: "city",
+    sortable: true,
+  },
+]
+
+const data = generateFakeTableData(4)
+
 function App() {
   const [inputData, setInputData] = useState<string>("")
   const [inputType, setInputType] = useState<HTMLInputTypeAttribute>("text")
   const [error, setError] = useState<string>("")
+
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setError("")
@@ -37,24 +77,40 @@ function App() {
   }
 
   // Theme Context
-  const [isDark, setIsDark] = useState<boolean>(false)
+  const [themeMode, setThemeMode] = useState<"dark" | "light">("dark")
   const changeTheme = () => {
-    setIsDark(prev => !prev)
+    setThemeMode(prev => prev === "dark" ? "light" : "dark")
   }
 
   // actual change in Theme
+  useEffect(() => {
+    localStorage.setItem("theme", themeMode)
+  }, [themeMode])
 
   useEffect(() => {
-    document.querySelector('html')?.classList.remove("light", "dark")
-    document.querySelector("html")?.classList.add(isDark ? "dark" : "light")
-  }, [isDark])
+    const html = document.querySelector("html")
+    if (!html) return
+
+    html.classList.remove("light", "dark")
+
+    const theme: string | null = localStorage.getItem("theme")
+
+    if (theme) {
+      html.classList.add(theme) // ✅ directly apply stored theme
+    } else {
+      setThemeMode("dark")
+      html.classList.add("dark")
+    }
+  }, [themeMode])
+
+
   return (
-    <ThemeProvider value={{ isDark, changeTheme }}>
+    <ThemeProvider value={{ themeMode, changeTheme }}>
       <div className="dark:bg-[#121212] text-white min-h-screen p-5">
         <button
           onClick={() => changeTheme()}
-          className="px-5 rounded-md py-1 bg-gray-200 text-gray-800 border border-gray-300 dark:border-gray-600 dark:text-gray-300 dark:bg-gray-800 "
-        >{isDark ? "Light" : "Dark"}
+          className="capitalize px-5 rounded-md py-1 bg-gray-200 text-gray-800 border border-gray-300 dark:border-gray-600 dark:text-gray-300 dark:bg-gray-800 "
+        >{themeMode === "dark" ? "light" : "dark"}
         </button>
 
         <InputForm
@@ -65,6 +121,8 @@ function App() {
           inputTypes={inputTypes}
           error={error}
         />
+
+        <DataTable data={data} columns={columns} />
       </div>
     </ThemeProvider>
   )

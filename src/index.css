@@ -4,9 +4,10 @@
 .container {
   max-width: 1400px;
   background-color: #f7f7f7;
-  margin-inline: auto;
+  margin: 1rem auto;
   padding: 2rem;
   color: black;
+  border-radius: 20px;
 }
 
 .dark .container {
@@ -32,4 +33,12 @@
 
 button {
   cursor: pointer;
+}
+
+@media (width<=600px) {
+  .container {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
 }
